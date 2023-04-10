@@ -1,3 +1,6 @@
+all: reservations.c
+	gcc -Wall -Wextra -o $@ $^ -lpthread
+
 reservations: reservations.c
 	gcc -Wall -Wextra -o $@ $^ -lpthread
 
