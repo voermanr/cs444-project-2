@@ -22,19 +22,17 @@ int reserve_seat(int n) {
     else return -1;
 }
 
-int free_seat(int n)
-{
+int free_seat(int n) {
     // Attempt to free (unreserve) seat number n
     //
-    // If the seat is already free, return -1
-    // Otherwise mark the seat as free and return 0
-    //
-    // This function should also decrement seat_taken_count if the seat
-    // wasn't already free.
+    if (!seat_taken[n]) {
+        return -1;
+    }
+    else seat_taken[n] = 0;
+    seat_taken_count--;
+    return 0;
 
-    // TODO
-
-    return 0;  // Change as necessary--included so it will build
+    // TODO: make this thread safe
 }
 
 int is_free(int n) {
