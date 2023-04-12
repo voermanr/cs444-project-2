@@ -36,11 +36,11 @@ int free_seat(int n) {
 }
 
 int is_free(int n) {
-    // Returns true if the given seat is available.
-
-    // TODO
-
-    return 0;  // Change as necessary--included so it will build
+    // TODO: make thread safe
+    if (!seat_taken[n]) {
+        return 1;
+    } else
+    return 0;
 }
 
 int verify_seat_count(void) {
