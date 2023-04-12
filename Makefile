@@ -7,3 +7,6 @@ reservations: reservations.c
 reservations.zip:
 	rm -f $@
 	zip $@ Makefile reservations.c
+
+clean:
+	rm -f reservations
