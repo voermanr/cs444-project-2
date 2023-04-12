@@ -11,19 +11,15 @@ int transaction_count;
 
 int seat_taken_count = 0;
 
-int reserve_seat(int n)
-{
-    // Attempt to reserve seat number n
-    //
-    // If the seat is already taken, return -1
-    // Otherwise mark the seat as taken and return 0
-    //
-    // This function should also increment seat_taken_count if the seat
-    // wasn't already taken.
-    
-    // TODO
+int reserve_seat(int n) {
+    // TODO: make this thread safe
+    if (!seat_taken[n]) {
+        seat_taken[n] = 1;
+        ++seat_taken_count;
+        return 0;
+    }
 
-    return 0;  // Change as necessary--included so it will build
+    else return -1;
 }
 
 int free_seat(int n)
