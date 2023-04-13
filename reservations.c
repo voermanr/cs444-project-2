@@ -9,17 +9,26 @@ int broker_count;
 int *seat_taken;  // Array of seats
 int transaction_count;
 
+pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+
 int seat_taken_count = 0;
 
 int reserve_seat(int n) {
-    // TODO: make this thread safe
+    // TODO: make this more efficient
+    int return_value;
+
+    pthread_mutex_lock(&lock);
+
     if (!seat_taken[n]) {
         seat_taken[n] = 1;
         ++seat_taken_count;
-        return 0;
+        return_value = 0;
     }
+    else return_value = -1;
 
-    else return -1;
+    pthread_mutex_unlock(&lock);
+
+    return return_value;
 }
 
 int free_seat(int n) {
