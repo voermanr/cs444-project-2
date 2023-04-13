@@ -33,23 +33,28 @@ int reserve_seat(int n) {
 
 int free_seat(int n) {
     // Attempt to free (unreserve) seat number n
-    //
-    if (!seat_taken[n]) {
-        return -1;
-    }
-    else seat_taken[n] = 0;
-    seat_taken_count--;
-    return 0;
 
-    // TODO: make this thread safe
+    int return_value;
+
+    pthread_mutex_lock(&lock);
+    if (!seat_taken[n]) { return_value = -1; }
+    else {
+        seat_taken[n] = 0;
+        seat_taken_count--;
+        return_value = 0;
+    }
+    pthread_mutex_unlock(&lock);
+    return return_value;
 }
 
 int is_free(int n) {
-    // TODO: make thread safe
-    if (!seat_taken[n]) {
-        return 1;
-    } else
-    return 0;
+    int return_value;
+    pthread_mutex_lock(&lock);
+    if (!seat_taken[n]) { return_value = 1; }
+    else { return_value = 0; }
+
+    pthread_mutex_unlock(&lock);
+    return return_value;
 }
 
 int verify_seat_count(void) {
@@ -64,14 +69,17 @@ int verify_seat_count(void) {
     // still work properly.
 
     int count = 0;
-
+    pthread_mutex_lock(&lock);
     // Count all the taken seats
     for (int i = 0; i < seat_count; i++)
         if (seat_taken[i])
             count++;
 
     // Return true if it's the same as seat_taken_count
-    return count == seat_taken_count;
+    int return_value = ( count == seat_taken_count);
+
+    pthread_mutex_unlock(&lock);
+    return return_value;
 }
 
 // ------------------- DO NOT MODIFY PAST THIS LINE -------------------
