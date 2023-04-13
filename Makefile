@@ -1,8 +1,8 @@
 all: reservations.c
-	gcc -Wall -Wextra -o $@ $^ -lpthread
+	gcc -Wall -Wextra -g -o $@ $^ -lpthread
 
 reservations: reservations.c
-	gcc -Wall -Wextra -o $@ $^ -lpthread
+	gcc -Wall -Wextra -g -o $@ $^ -lpthread
 
 reservations.zip:
 	rm -f $@
